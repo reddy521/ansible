@@ -6,8 +6,7 @@
 trigger:
 - devel
 
-pool:
-  vmImage: myazureagent
+pool: myazureagent
 
 steps:
 - script: echo Hello, world!
