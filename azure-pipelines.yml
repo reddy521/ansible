@@ -6,13 +6,18 @@
 trigger:
 - devel
 
-pool: myazureagent
+pool: myselfagent
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: |
+    sudo apt-get update -y
+    sudo apt-get install -y gnupg software-properties-common curl
+    curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+    sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+    sudo apt-get update -y
+    sudo apt-get install -y terraform
+  displayName: 'Install Terraform'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+     terraform -version
+  displayName: 'Verify Terraform Installation'
